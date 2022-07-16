@@ -9,11 +9,18 @@ import UIKit
 
 class ViewController: UIViewController {
 
+    @IBOutlet weak var infoLabel: UILabel!
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
+                print("111")
     }
-
-
+    
+    @IBAction func getJSON(_ sender: Any) {
+        NetworkManager.shared.fetchHeroes(from: Link.url.rawValue) { heroes in
+            print(heroes)
+        }
+    }
 }
 
