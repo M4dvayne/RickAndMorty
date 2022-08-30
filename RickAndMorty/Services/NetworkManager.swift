@@ -35,13 +35,32 @@ class NetworkManager {
         }.resume()
     }
     
-    func fetchImage(url: String?) -> Data? {
+    
+    func fetchCharacters(from url: String?, with completion: @escaping(Character) -> Void) {
+        guard let stringUrl = url else {return}
+        guard let requestUrl = URL(string: stringUrl) else {return}
         
+        URLSession.shared.dataTask(with: requestUrl) { data, _, error in
+            guard let data = data else {return}
+            guard let error = error else {print(error?.localizedDescription ?? "There is not error description")
+                return
+            }
+            print(error)
+            
+            do {
+                let receivedCharacters = try JSONDecoder().decode(Character.self, from: data)
+                completion(receivedCharacters)
+            } catch let error {
+                print(error)
+            }
+        }.resume()
+    }
+    
+    
+    func fetchImage(url: String?) -> Data? {
         guard let stringUrl = url else {return nil}
         guard let imageURL = URL(string: stringUrl) else {return nil}
         return try? Data(contentsOf: imageURL)
-        
-        
     }
 }
 

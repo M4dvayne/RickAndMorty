@@ -26,7 +26,7 @@ struct Character: Decodable {
     let species: String
     let gender: String
     let image: String
-    let episode: [String]
+    let episode: [String?]
 }
 
 struct Episode: Decodable {

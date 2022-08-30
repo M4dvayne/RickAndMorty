@@ -9,13 +9,18 @@ import UIKit
 
 class CollectionViewCell: UICollectionViewCell {
     
-    
-   
-    @IBOutlet weak var heroImage: UIImageView!
     @IBOutlet weak var heroInfoLabel: UILabel!
+    @IBOutlet weak var heroImage: UIImageView!
+    {
+        didSet {
+            heroImage.layer.cornerRadius = heroImage.frame.width / 2
+        }
+    }
+    
     
     func configure(with character: Character?) {
         heroInfoLabel.text = character?.name
+        
         DispatchQueue.global().async {
             guard let stringUrl = character?.image else {return}
             guard let url = URL(string: stringUrl) else {return}
@@ -24,7 +29,5 @@ class CollectionViewCell: UICollectionViewCell {
                 self.heroImage.image = UIImage(data: dataImage)
             }
         }
-        
-        
     }
 }
